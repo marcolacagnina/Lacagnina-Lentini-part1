@@ -1,10 +1,11 @@
 # SE4HPCproject
 The purpose of this first part of the project is to test a buggy implementation of the matrix multiplication software provided in the directory [lib](https://github.com/marcolacagnina/Lacagnina-Lentini-part1/tree/main/lib).
 
-Since the matrix multiplication function was provided as compiled object code, we tested it in a black box manner. To identify errors, we started by testing some fundamental mathematical properties of matrix multiplication, adapting each subsequent test based on the error outputs from the previous tests.
+Since the matrix multiplication function was provided as compiled object code, we tested it in a black box manner. To identify errors, we started by testing some fundamental mathematical properties of matrix multiplication, adapting each subsequent test based on the error outputs from the previous tests. 
 
 Summary of the tests:
-Summary of the errors:
+
+The errors below are highlighted by the function when prompted, found through the use of tests.
 
 1. Result matrix contains a 0. 
 2. Matrix A contains the number 7.
@@ -18,4 +19,11 @@ Summary of the errors:
 10. The matrix B contains a negative number.
 11. The matrix C contains a number bigger than 100.
 12. The matrix C has an even number of rows.
-13. A row in matrix A is filled entirely with 5s. (Error 15)
+13. A row in matrix A is filled entirely with 5s.
+14. Matrix B contains the number 3.
+15. Result matrix contains a number between 11 and 20.
+16. A row in matrix A contains more than one '1'.
+17. Result matrix C contains the number 17.
+
+
+
