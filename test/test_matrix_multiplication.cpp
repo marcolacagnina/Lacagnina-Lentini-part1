@@ -35,7 +35,7 @@ TEST(MatrixMultiplicationTest, TestMultiplyMatrices)
  * 1. Result matrix contains a 0.
  * 2. Matrix A contains the number 7.
  * 3. Matrix A is a square matrix.
- * 4. The number of rows in A is uqual to the number of columns in B.
+ * 4. The number of rows in A is equal to the number of columns in B.
  * 5. The number of columns in A is odd.
  * 6. Every row in B contains at least one 0.
  */
@@ -151,6 +151,138 @@ TEST(MatrixMultiplicationTest, TestSquaredNormComputation)
         {50}};
 
     ASSERT_EQ(C, expected) << "Square norm computation test failed!";
+}
+
+/**
+ * @brief Test for verify the transpose property of the matrix multiplication, that is:
+ *        the transpose of a product of matrices is the product, in the reverse order, of the transposes of the factors.
+ *        A = [5 1 1
+ *             4 1 3 
+ *             2 9 4];
+ *         B = [1 9 4
+ *              7 2 4
+ *              3 2 8];
+ *        The result should be: (A*B)^t.
+ * From the test execution, the test failed for the following reasons:
+ * 2. Matrix A contains the number 7.
+ * 3. Matrix A is a square matrix!
+ * 4. The number of rows in A is equal to the number of columns in B.
+ * 5. Number of columns in matrix A is odd!
+ * 14. Matrix B contains the number 3.
+ */
+TEST(MatrixMultiplicationTest, TestTranspose)
+{
+    std::vector<std::vector<int>> A = {
+        {1, 7, 3},
+        {9, 2, 2},
+        {4, 4, 8}};
+    std::vector<std::vector<int>> B = {
+        {5, 4, 2},
+        {1, 1, 9},
+        {1, 3, 4}};
+    std::vector<std::vector<int>> C(3, std::vector<int>(3, 0));
+
+    multiplyMatrices(A, B, C, 3, 3, 3);
+
+    std::vector<std::vector<int>> expected = {
+        {15, 20, 77},
+        {49, 44, 44},
+        {32, 44, 76}};
+
+    ASSERT_EQ(C, expected) << "Transpose Matrix test failed!";
+}
+
+/**
+ * @brief Test for multiplying a matrix and a vector.
+ *         The result should be a vector.
+ * 
+ * From the test execution, the test failed for the following reasons:
+ * Error 11: Matrix C contains a number bigger than 100.
+ * Error 15: Matrix C contains a number between 11 and 20.
+ * Error 16: A row in matrix A contains more than one '1'
+ * Error 17: Matrix C contains the number 17.
+*/
+TEST(MatrixMultiplicationTest, TestMatrixVectorMultiplication)
+{
+    std::vector<std::vector<int>> A = {
+        {16, 23},
+        {3, 9},
+        {1, 1}};
+
+    std::vector<std::vector<int>> B = {
+        {5},
+        {9}};
+    std::vector<std::vector<int>> C(3, std::vector<int>(1, 0));
+
+    multiplyMatrices(A, B, C, 3, 2, 1);
+
+    std::vector<std::vector<int>> expected = {
+        {287},
+        {96},
+        {14}};
+
+    ASSERT_EQ(C, expected) << "Matrix Vector multiplication test failed!";
+}
+
+/**
+ * @brief Test for multiplying two vectors.
+ *        Result should be a 1x1 matrix with the scalar product of the two vectors.
+ * 
+ * From the test execution, the test failed for the following reasons:
+ * 4. The number of rows in A is equal to the number of columns in B!
+ * 11. Matrix contains a number bigger than 100!
+*/
+TEST(MatrixMultiplicationTest, TestScalarProduct)
+{
+    std::vector<std::vector<int>> A = {
+        {13, 9, 23, 1}};
+
+    std::vector<std::vector<int>> B = {
+        {2},
+        {21},
+        {11},
+        {62}};
+
+    std::vector<std::vector<int>> C(1, std::vector<int>(1, 0));
+
+    multiplyMatrices(A, B, C, 1, 4, 1);
+
+    std::vector<std::vector<int>> expected = {
+       {530} };
+
+    ASSERT_EQ(C, expected) << "Scalar Product test failed!";
+}
+
+/**
+ * @brief Test for conformability of the two matrices involved in matrix multiplication:
+ *        the number of columns in the first matrix must be equal to the number of rows in the second matrix.
+ *        Therefore, it is reasonable to assume that if this property is not respected, the function must throws an exception.
+ *        This test checks this, and also it checks if the function exits producing a nonzero exit status.
+ * 
+ * From the test execution, it failed with this output:
+ * Expected: multiplyMatrices(A, B, C, 1, 4, 1) throws an exception. Actual: it doesn't.
+ * The assert_death does not produce output, this means death tests are not supported by the function.
+ * Moreover, the function does not print any type of message indicating the impossibility of the function.
+ * The test failed for the following reasons:
+ * 4. The number of rows in A is equal to the number of columns in B!
+ * 11. Matrix contains a number bigger than 100!
+*/
+TEST(MatrixMultiplicationTest, ConformabilityTest)
+{
+    std::vector<std::vector<int>> A = {
+        {13, 9, 23, 1}};
+
+    std::vector<std::vector<int>> B = {
+        {2},
+        {21},
+        {11},
+        {62},
+        {8}};
+
+    std::vector<std::vector<int>> C(1, std::vector<int>(1, 0));
+
+    ASSERT_ANY_THROW(multiplyMatrices(A, B, C, 1, 4, 1));
+    ASSERT_DEATH_IF_SUPPORTED(multiplyMatrices(A, B, C, 1, 4, 1), "Conformability Test failed!");
 }
 
 int main(int argc, char **argv)
