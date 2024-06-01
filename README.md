@@ -3,8 +3,35 @@ The purpose of this first part of the project is to test a buggy implementation 
 
 Since the matrix multiplication function was provided as compiled object code, we tested it in a black box manner. To identify errors, we started by testing some fundamental mathematical properties of matrix multiplication, adapting each subsequent test based on the error outputs from the previous tests. 
 
-Summary of the tests:
+## Summary of the tests:
+### 1. TestZeroMatrixRight
+Test for multiplying blablabla. The result is the expected matrix 
+```math
+$$
+\stackrel{A}{\begin{pmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{pmatrix}}
 
+\times
+
+\stackrel{B}{\begin{pmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{pmatrix}}
+=
+
+\stackrel{expected \ C}{\begin{pmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{pmatrix}}
+$$
+```
+
+## Summary of the errors:
 The errors below are highlighted by the function when prompted, found through the use of tests.
 
 1. Result matrix contains a 0. 
