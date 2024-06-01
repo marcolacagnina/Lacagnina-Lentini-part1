@@ -256,33 +256,67 @@ TEST(MatrixMultiplicationTest, TestScalarProduct)
 /**
  * @brief Test for conformability of the two matrices involved in matrix multiplication:
  *        the number of columns in the first matrix must be equal to the number of rows in the second matrix.
- *        Therefore, it is reasonable to assume that if this property is not respected, the function must throws an exception.
- *        This test checks this, and also it checks if the function exits producing a nonzero exit status.
+ *        The test is performed with a 1x5 matrix and a 4x1 matrix, it is reasonable to assume that the function checks the impossibility of the operation 
+ *        by returning an error or by not carrying out the operation; if it is not true, the function generates a segmentation fault (signal 11), since colsA>rowsB.
+ *        The test check if the program is terminated by the signal 11.
  * 
- * From the test execution, it failed with this output:
- * Expected: multiplyMatrices(A, B, C, 1, 4, 1) throws an exception. Actual: it doesn't.
- * The assert_death does not produce output, this means death tests are not supported by the function.
- * Moreover, the function does not print any type of message indicating the impossibility of the function.
- * The test failed for the following reasons:
- * 4. The number of rows in A is equal to the number of columns in B!
- * 11. Matrix contains a number bigger than 100!
+ * The test is passed, this means the function does not check the conformability of the matrices and terminates with a segmentation fault.
 */
 TEST(MatrixMultiplicationTest, ConformabilityTest)
 {
     std::vector<std::vector<int>> A = {
-        {13, 9, 23, 1}};
+        {13, 9, 23, 1, 2}};
 
     std::vector<std::vector<int>> B = {
         {2},
         {21},
         {11},
-        {62},
-        {8}};
+        {62}};
 
     std::vector<std::vector<int>> C(1, std::vector<int>(1, 0));
 
-    ASSERT_ANY_THROW(multiplyMatrices(A, B, C, 1, 4, 1));
-    ASSERT_DEATH_IF_SUPPORTED(multiplyMatrices(A, B, C, 1, 4, 1), "Conformability Test failed!");
+    //From Google Test documentation: the “threadsafe” death test style is used in order to help mitigate 
+    //the risks of testing in a possibly multithreaded environment. 
+    GTEST_FLAG_SET(death_test_style, "threadsafe");     
+    ASSERT_EXIT(multiplyMatrices(A, B, C, 1, 5, 1),::testing::KilledBySignal(11), "");
+}
+
+/**
+ * @brief Test for result matrix dimension:
+ *        in the matrix multiplication, the result matrix has a number of row equal to the number of row in the firs matrix 
+ *        and a number of columns equal to the numbero of colums in the second matrix.
+ *        This test uses two matrices with positive elements, the first with dimensions 3x4 and the second with dimensions 4x2.
+ *        The result matrix should be a 3x2 matrix. To test this, a matrix of size 3x3 is declared with random negative elements in the third column,
+ *        so that it is checked that these values ​​have not been touched by the function.
+ * 
+ * The test passed, however errors were found in the library:
+ * 11. Result matrix contains a number bigger than 100.
+ * 18. Matrix B contains the number 6.
+*/
+TEST(MatrixMultiplicationTest, TestDimension)
+{
+    std::vector<std::vector<int>> A = {
+        {3, 8, 6, 5},
+        {6, 3, 4, 2},
+        {2, 1, 8, 9}};
+
+    std::vector<std::vector<int>> B = {
+        {9, 7},
+        {7, 6},
+        {1, 4},
+        {6, 1}};
+
+    std::vector<std::vector<int>> C = {
+
+        {0, 0, -73},
+        {0, 0, -3},
+        {0, 0, -50}};
+
+    multiplyMatrices(A, B, C, 3, 4, 2);
+    
+    bool check = C[0][2] == -73 && C[1][2] == -3 && C[2][2] == -50;
+
+    ASSERT_TRUE(check) << "Dimensionality test failed!";
 }
 
 int main(int argc, char **argv)
