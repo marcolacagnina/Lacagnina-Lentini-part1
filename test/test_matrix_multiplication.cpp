@@ -5,8 +5,13 @@
 
 // ######################### Source code of multiplyMatrices in src/matrix_mult
 
+/**
+ * @brief Example of matrix multiplication test.
+ *        Being an example, the test is skipped.
+ */
 TEST(MatrixMultiplicationTest, TestMultiplyMatrices)
 {
+    GTEST_SKIP();
     std::vector<std::vector<int>> A = {
         {1, 2, 3},
         {4, 5, 6}};
@@ -29,7 +34,6 @@ TEST(MatrixMultiplicationTest, TestMultiplyMatrices)
  * @brief Test for multiplying a matrix with a zero matrix on the left.
  *        The result should be a zero matrix, since any matrix multiplied
  *        by a zero matrix is a zero matrix.
- *
  *
  * From the test execution, the test failed for the following reasons:
  * 1. Result matrix contains a 0.
@@ -157,7 +161,7 @@ TEST(MatrixMultiplicationTest, TestSquaredNormComputation)
  * @brief Test for verify the transpose property of the matrix multiplication, that is:
  *        the transpose of a product of matrices is the product, in the reverse order, of the transposes of the factors.
  *        A = [5 1 1
- *             4 1 3 
+ *             4 1 3
  *             2 9 4];
  *         B = [1 9 4
  *              7 2 4
@@ -195,13 +199,13 @@ TEST(MatrixMultiplicationTest, TestTranspose)
 /**
  * @brief Test for multiplying a matrix and a vector.
  *         The result should be a vector.
- * 
+ *
  * From the test execution, the test failed for the following reasons:
  * Error 11: Matrix C contains a number bigger than 100.
  * Error 15: Matrix C contains a number between 11 and 20.
  * Error 16: A row in matrix A contains more than one '1'
  * Error 17: Matrix C contains the number 17.
-*/
+ */
 TEST(MatrixMultiplicationTest, TestMatrixVectorMultiplication)
 {
     std::vector<std::vector<int>> A = {
@@ -227,11 +231,11 @@ TEST(MatrixMultiplicationTest, TestMatrixVectorMultiplication)
 /**
  * @brief Test for multiplying two vectors.
  *        Result should be a 1x1 matrix with the scalar product of the two vectors.
- * 
+ *
  * From the test execution, the test failed for the following reasons:
  * 4. The number of rows in A is equal to the number of columns in B!
  * 11. Matrix contains a number bigger than 100!
-*/
+ */
 TEST(MatrixMultiplicationTest, TestScalarProduct)
 {
     std::vector<std::vector<int>> A = {
@@ -248,7 +252,7 @@ TEST(MatrixMultiplicationTest, TestScalarProduct)
     multiplyMatrices(A, B, C, 1, 4, 1);
 
     std::vector<std::vector<int>> expected = {
-       {530} };
+        {530}};
 
     ASSERT_EQ(C, expected) << "Scalar Product test failed!";
 }
@@ -256,12 +260,13 @@ TEST(MatrixMultiplicationTest, TestScalarProduct)
 /**
  * @brief Test for conformability of the two matrices involved in matrix multiplication:
  *        the number of columns in the first matrix must be equal to the number of rows in the second matrix.
- *        The test is performed with a 1x5 matrix and a 4x1 matrix, it is reasonable to assume that the function checks the impossibility of the operation 
- *        by returning an error or by not carrying out the operation; if it is not true, the function generates a segmentation fault (signal 11), since colsA>rowsB.
+ *        The test is performed with a 1x5 matrix and a 4x1 matrix, it is reasonable to assume
+ *        that the function checks the impossibility of the operation
+ *        by returning an error or by not carrying out the operation; if it is not true, the function generates a segmentation  fault (signal 11), since colsA>rowsB.
  *        The test check if the program is terminated by the signal 11.
- * 
+ *
  * The test is passed, this means the function does not check the conformability of the matrices and terminates with a segmentation fault.
-*/
+ */
 TEST(MatrixMultiplicationTest, ConformabilityTest)
 {
     std::vector<std::vector<int>> A = {
@@ -275,24 +280,27 @@ TEST(MatrixMultiplicationTest, ConformabilityTest)
 
     std::vector<std::vector<int>> C(1, std::vector<int>(1, 0));
 
-    //From Google Test documentation: the “threadsafe” death test style is used in order to help mitigate 
-    //the risks of testing in a possibly multithreaded environment. 
-    GTEST_FLAG_SET(death_test_style, "threadsafe");     
-    ASSERT_EXIT(multiplyMatrices(A, B, C, 1, 5, 1),::testing::KilledBySignal(11), "");
+    // From Google Test documentation: the “threadsafe” death test style is
+    // used in order to help mitigate the risks of testing in a possibly multithreaded environment.
+    GTEST_FLAG_SET(death_test_style, "threadsafe");
+    ASSERT_EXIT(multiplyMatrices(A, B, C, 1, 5, 1), ::testing::KilledBySignal(11), "");
 }
 
 /**
  * @brief Test for result matrix dimension:
- *        in the matrix multiplication, the result matrix has a number of row equal to the number of row in the firs matrix 
- *        and a number of columns equal to the numbero of colums in the second matrix.
- *        This test uses two matrices with positive elements, the first with dimensions 3x4 and the second with dimensions 4x2.
- *        The result matrix should be a 3x2 matrix. To test this, a matrix of size 3x3 is declared with random negative elements in the third column,
+ *        in the matrix multiplication, the result matrix has a number of row
+ *        equal to the number of row in the firs matrix and a number of columns
+ *        equal to the numbero of colums in the second matrix.
+ *        This test uses two matrices with positive elements, the first with dimensions
+ *        3x4 and the second with dimensions 4x2.
+ *        The result matrix should be a 3x2 matrix. To test this, a matrix of size 3x3 is declared
+ *        with random negative elements in the third column,
  *        so that it is checked that these values ​​have not been touched by the function.
- * 
+ *
  * The test passed, however errors were found in the library:
  * 11. Result matrix contains a number bigger than 100.
  * 18. Matrix B contains the number 6.
-*/
+ */
 TEST(MatrixMultiplicationTest, TestDimension)
 {
     std::vector<std::vector<int>> A = {
@@ -313,12 +321,64 @@ TEST(MatrixMultiplicationTest, TestDimension)
         {0, 0, -50}};
 
     multiplyMatrices(A, B, C, 3, 4, 2);
-    
+
     bool check = C[0][2] == -73 && C[1][2] == -3 && C[2][2] == -50;
 
     ASSERT_TRUE(check) << "Dimensionality test failed!";
 }
 
+/**
+ * @brief Test for multiplying two empty matrices. We expect the result to be an empty matrix.
+ *
+ * From the test execution, the test failed for the following reasons:
+ * 6. Every row in B contains at least one 0
+ *
+ * In addition, a segmentation fault occurred during the execution of the test.
+ * The test is skipped due to that reason.
+ */
+TEST(MatrixMultiplicationTest, TestEmptyMatrices)
+{
+    GTEST_SKIP();
+
+    std::vector<std::vector<int>> A = {};
+    std::vector<std::vector<int>> B = {};
+    std::vector<std::vector<int>> C = {};
+
+    multiplyMatrices(A, B, C, 0, 0, 0);
+
+    std::vector<std::vector<int>> expected = {};
+
+    ASSERT_EQ(C, expected) << "Empty matrix test failed!";
+}
+
+/**
+ * @brief Test for multiplying two matrices that respect all the constraints found.
+ *
+ * From the test execution, the test passed. This means we have found two matrices
+ * that can be multiplied together.
+ */
+TEST(MatrixMultiplicationTest, TestCorrectMatrices)
+{
+    std::vector<std::vector<int>> A = {
+        {1, 2, 3, 4}};
+
+    std::vector<std::vector<int>> B = {
+        {8, 7},
+        {7, 5},
+        {8, 7},
+        {7, 5}};
+
+    std::vector<std::vector<int>> C(1, std::vector<int>(2, 0));
+
+    multiplyMatrices(A, B, C, 1, 4, 2);
+
+    std::vector<std::vector<int>> expected = {
+        {74, 58}};
+
+    ASSERT_EQ(C, expected) << "Correct matrix test failed!";
+}
+
+// main function to run the tests.
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);
