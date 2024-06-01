@@ -24,6 +24,7 @@ The errors below are highlighted by the function when prompted, found through th
 15. Result matrix contains a number between 11 and 20.
 16. A row in matrix A contains more than one '1'.
 17. Result matrix C contains the number 17.
+18. Matrix B contains the number 6.
 
 
 
