@@ -150,10 +150,144 @@ $$
 ```
 
 ### 5. Transpose
+Test for verifying the transpose property of the matrix multiplication. A = **B<sup>t</sup>**, B = **A<sup>t</sup>**, C = **(A*B)<sup>t</sup>**.
+
+```math
+$$
+\stackrel{A}{\begin{pmatrix}
+1 & 7 & 3 \\
+9 & 2 & 2 \\
+4 & 4 & 8
+\end{pmatrix}}
+
+\times
+
+\stackrel{B}{\begin{pmatrix}
+5 & 4 & 2 \\
+1 & 1 & 9 \\
+1 & 3 & 4
+\end{pmatrix}}
+=
+
+\stackrel{C_{exp}}{\begin{pmatrix}
+15 & 20 & 77 \\
+49 & 44 & 44 \\
+32 & 44 & 76
+\end{pmatrix}}
+
+\quad
+\quad
+
+\stackrel{C_{act}}{\begin{pmatrix}
+2019 & 30 & 84 \\
+49 & 49 & 44 \\
+32 & 54 & 76
+\end{pmatrix}}
+
+$$
+```
+
+
 ### 6. MatrixVector
+Test for multiplying a matrix and a vector.
+```math
+$$
+\stackrel{A}{\begin{pmatrix}
+16 & 23 \\
+3 & 9 \\
+1 & 1
+\end{pmatrix}}
+
+\times
+
+\stackrel{B}{\begin{pmatrix}
+5 \\
+9
+\end{pmatrix}}
+=
+
+\stackrel{C_{exp}}{\begin{pmatrix}
+287 \\
+96 \\
+14
+\end{pmatrix}}
+
+\quad
+\quad
+
+\stackrel{C_{act}}{\begin{pmatrix}
+1986  \\
+96 \\
+22 
+\end{pmatrix}}
+
+$$
+```
+
 ### 7. Scalar Product
+Test for multiplying two vectors.
+```math
+$$
+\stackrel{A}{\begin{pmatrix}
+13 & 9 & 23 & 1
+
+\end{pmatrix}}
+
+\times
+
+\stackrel{B}{\begin{pmatrix}
+2 \\
+21 \\
+11 \\
+62 
+\end{pmatrix}}
+=
+
+\stackrel{C_{exp}}{\begin{pmatrix}
+530 
+\end{pmatrix}}
+
+\quad
+\quad
+
+\stackrel{C_{act}}{\begin{pmatrix}
+1987
+\end{pmatrix}}
+
+$$
+```
+
 ### 8. Comformability
+Test for conformability of the two matrices involved in matrix multiplication.
+
+**Expected**: checking the property before carrying out the operation and stopping it.
+
+
 ### 9. Dimension
+Test for result matrix dimension
+```math
+$$
+\stackrel{A}{\begin{pmatrix}
+3 & 8 & 6 & 5 \\
+6 & 3 & 4 & 2 \\
+2 & 1 & 8 & 9
+\end{pmatrix}}
+
+\times
+
+\stackrel{B}{\begin{pmatrix}
+9 & 7 \\
+7 & 6 \\
+1 & 4 \\
+6 & 1
+\end{pmatrix}}
+=
+C_{exp}
+
+$$
+```
+**Expected**: **C<sub>exp</sub>** as a 3x2 matrix.
+
 ### 10. TestEmptyMatrices
 Test for multiplying two empty matrices. 
 ```math
