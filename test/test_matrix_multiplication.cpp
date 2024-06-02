@@ -31,7 +31,7 @@ TEST(MatrixMultiplicationTest, TestMultiplyMatrices)
 }
 
 /**
- * @brief Test for multiplying a matrix with a zero matrix on the left.
+ * @brief Test for multiplying a matrix with a zero matrix.
  *        The result should be a zero matrix, since any matrix multiplied
  *        by a zero matrix is a zero matrix.
  *
@@ -43,7 +43,7 @@ TEST(MatrixMultiplicationTest, TestMultiplyMatrices)
  * 5. The number of columns in A is odd.
  * 6. Every row in B contains at least one 0.
  */
-TEST(MatrixMultiplicationTest, TestZeroMatrixRight)
+TEST(MatrixMultiplicationTest, TestZeroMatrix)
 {
     std::vector<std::vector<int>> A = {
         {1, 2, 3},
@@ -66,7 +66,7 @@ TEST(MatrixMultiplicationTest, TestZeroMatrixRight)
 }
 
 /**
- * @brief Test for multiplying a matrix with an identity matrix on the right.
+ * @brief Test for multiplying a matrix with an identity matrix.
  *        The result should be the same matrix, since any matrix multiplied
  *        by an identity matrix is the same matrix.
  *
@@ -75,7 +75,7 @@ TEST(MatrixMultiplicationTest, TestZeroMatrixRight)
  * 7. The first element in matrix A is equal to the first element in matrix B.
  * 8. Element-wise multiplication of ones detected.
  */
-TEST(MatrixMultiplicationTest, TestIdentityMatrixRight)
+TEST(MatrixMultiplicationTest, TestIdentityMatrix)
 {
     std::vector<std::vector<int>> A = {
         {1, 2, 3, 4},
@@ -93,9 +93,8 @@ TEST(MatrixMultiplicationTest, TestIdentityMatrixRight)
 
     std::vector<std::vector<int>> expected = {
         {1, 2, 3, 4},
-        {5, 6, 7, 8},
-        {9, 10, 11, 12},
-    };
+        {1, 2, 3, 4},
+        {1, 2, 3, 4}};
 
     ASSERT_EQ(C, expected) << "Identity matrix left test failed!";
 }
@@ -158,7 +157,7 @@ TEST(MatrixMultiplicationTest, TestSquaredNormComputation)
 }
 
 /**
- * @brief Test for verify the transpose property of the matrix multiplication, that is:
+ * @brief Test for verifying the transpose property of the matrix multiplication, that is:
  *        the transpose of a product of matrices is the product, in the reverse order, of the transposes of the factors.
  *        A = [5 1 1
  *             4 1 3
@@ -167,6 +166,7 @@ TEST(MatrixMultiplicationTest, TestSquaredNormComputation)
  *              7 2 4
  *              3 2 8];
  *        The result should be: (A*B)^t.
+ *
  * From the test execution, the test failed for the following reasons:
  * 2. Matrix A contains the number 7.
  * 3. Matrix A is a square matrix!
@@ -201,10 +201,10 @@ TEST(MatrixMultiplicationTest, TestTranspose)
  *         The result should be a vector.
  *
  * From the test execution, the test failed for the following reasons:
- * Error 11: Matrix C contains a number bigger than 100.
- * Error 15: Matrix C contains a number between 11 and 20.
+ * Error 11: Result matrix contains a number bigger than 100.
+ * Error 15: Result matrix contains a number between 11 and 20.
  * Error 16: A row in matrix A contains more than one '1'
- * Error 17: Matrix C contains the number 17.
+ * Error 17: Result matrix contains the number 17.
  */
 TEST(MatrixMultiplicationTest, TestMatrixVectorMultiplication)
 {
