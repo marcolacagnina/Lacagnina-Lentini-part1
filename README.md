@@ -288,31 +288,7 @@ $$
 ```
 **Expected**: **C<sub>exp</sub>** as a 3x2 matrix.
 
-### 10. TestEmptyMatrices
-Test for multiplying two empty matrices. 
-```math
-$$
-\stackrel{A}{\begin{pmatrix}
-\end{pmatrix}}
-
-\times
-
-\stackrel{B}{\begin{pmatrix}
-\end{pmatrix}}
-=
-
-\stackrel{C_{exp}}{\begin{pmatrix}
- \end{pmatrix}}
-
-\quad
-\quad
-
-
-
-$$
-```
-
-### 12. TestCorrectMatrices
+### 10. TestCorrectMatrices
 Test for Multiplying two matrices that respect all the constrains found.
 
 ```math
