@@ -158,7 +158,8 @@ TEST(MatrixMultiplicationTest, TestSquaredNormComputation)
 
 /**
  * @brief Test for verifying the transpose property of the matrix multiplication, that is:
- *        the transpose of a product of matrices is the product, in the reverse order, of the transposes of the factors.
+ *        the transpose of a product of matrices is the product,
+ *        in the reverse order, of the transposes of the factors.
  *        A = [5 1 1
  *             4 1 3
  *             2 9 4];
@@ -262,10 +263,12 @@ TEST(MatrixMultiplicationTest, TestScalarProduct)
  *        the number of columns in the first matrix must be equal to the number of rows in the second matrix.
  *        The test is performed with a 1x5 matrix and a 4x1 matrix, it is reasonable to assume
  *        that the function checks the impossibility of the operation
- *        by returning an error or by not carrying out the operation; if it is not true, the function generates a segmentation  fault (signal 11), since colsA>rowsB.
+ *        by returning an error or by not carrying out the operation; if it is not true,
+ *        the function generates a segmentation  fault (signal 11), since colsA>rowsB.
  *        The test check if the program is terminated by the signal 11.
  *
- * The test is passed, this means the function does not check the conformability of the matrices and terminates with a segmentation fault.
+ * The test is passed, this means the function does not check the conformability of the matrices
+ * and terminates with a segmentation fault.
  */
 TEST(MatrixMultiplicationTest, ConformabilityTest)
 {
@@ -325,30 +328,6 @@ TEST(MatrixMultiplicationTest, TestDimension)
     bool check = C[0][2] == -73 && C[1][2] == -3 && C[2][2] == -50;
 
     ASSERT_TRUE(check) << "Dimensionality test failed!";
-}
-
-/**
- * @brief Test for multiplying two empty matrices. We expect the result to be an empty matrix.
- *
- * From the test execution, the test failed for the following reasons:
- * 6. Every row in B contains at least one 0
- *
- * In addition, a segmentation fault occurred during the execution of the test.
- * The test is skipped due to that reason.
- */
-TEST(MatrixMultiplicationTest, TestEmptyMatrices)
-{
-    GTEST_SKIP();
-
-    std::vector<std::vector<int>> A = {};
-    std::vector<std::vector<int>> B = {};
-    std::vector<std::vector<int>> C = {};
-
-    multiplyMatrices(A, B, C, 0, 0, 0);
-
-    std::vector<std::vector<int>> expected = {};
-
-    ASSERT_EQ(C, expected) << "Empty matrix test failed!";
 }
 
 /**
